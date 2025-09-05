@@ -19,8 +19,8 @@ Parámetros de estilo en Tkinter
 
 
 3. Bordes y relieve
-  • bd o borderwidth: grosor del borde.
-  • relief: estilo del borde (flat, raised, sunken, groove, ridge).
+  > • bd o borderwidth: grosor del borde.
+  > • relief: estilo del borde (flat, raised, sunken, groove, ridge).
 
 
 4. Dimensiones
