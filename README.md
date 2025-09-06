@@ -1,7 +1,7 @@
 Parámetros de estilo en Tkinter
 1. Colores y fondo
   > • bg o background: color de fondo.
-   • fg o foreground: color del texto.
+  • fg o foreground: color del texto.
   > • activebackground: color de fondo cuando el mouse está encima (solo algunos widgets).
   > • activeforeground: color del texto cuando el mouse está encima.
   > • disabledforeground: color del texto si está deshabilitado.
