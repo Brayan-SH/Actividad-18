@@ -8,16 +8,10 @@ import tkinter as tk
 
 # Nombre de la banda, institución(Primaria, Básico, Diversificado).
 class Banda_Participante:
-  @property
-  def nombre(self):
-    return self.__nombre
-
-  @property
-  def institucion(self):
-    return self.__institucion
   def __init__(self, nombre, institucion):
     self.__nombre = nombre
     self.__institucion = institucion
+
 
   def mostrar_info(self):
     return (
@@ -28,11 +22,11 @@ class Banda_Participante:
 
 
 class Banda_Escolar(Banda_Participante):
-  def __init__(self, nombre, institucion, categoria):
-    super().__init__(nombre, institucion)
-    self.__categoria = None # Primaria, Básico, Diversificado
+  def __init__(self, __nombre, __institucion, categoria):
+    super().__init__(__nombre, __institucion)
+    self.__categoria = None
     self.__puntajes = {}
-    self.set_categoria(categoria)
+    self.Set_Categoria(categoria) # Primaria, Básico, Diversificado
 
   
   # Validar categoría : Primaria, Básico, Diversificado
@@ -58,7 +52,6 @@ class Banda_Escolar(Banda_Participante):
       self.__puntajes.append(puntaje)
     else:
       return None
-      # return None
   
   
   # Propiedades total y promedio.
@@ -82,12 +75,20 @@ class Banda_Escolar(Banda_Participante):
 
 class Consurso_Bandas(Banda_Escolar):
   def __init__(self):
-    self.bandas = {}
+    self.banda = {}
     
+  
+  # Inscribir banda por categoría : nombre de la banda, institución.
   def Inscribir_Banda(self, banda: Banda_Escolar):
-    if banda.nombre not in self.bandas:
-      self.bandas[banda.nombre] = banda
-      print(f'Banda {banda.nombre} inscrita exitosamente.')
+    with open('bandas_inscritas.txt', 'r') as file:
+      for line in file:
+        campos = line.strip().split(',')
+        if banda.get_nombre() == campos[0]:
+          print('La banda ya está inscrita.')
+          return
+        
+    self.banda[banda.get_nombre()] = banda
+
   
   
    # Criterios de evaluación (0 a 10): 
@@ -97,7 +98,7 @@ class Consurso_Bandas(Banda_Escolar):
   # • alineación, 
   # • puntualidad.
   # Puntaje total = suma de criterios.
-  def Registrar_Evaluacion(self, nombre_banda, puntajes):
+  def Registrar_Evaluacion(self, nombre_banda):
     while True:
       Banda_Escolar.Limpiar()
       print('Criterios de evaluación (0 a 10) : ')
@@ -111,29 +112,44 @@ class Consurso_Bandas(Banda_Escolar):
       print('Criterios de evaluación (0 a 10) : ')
       uniformidad = int(input('• Uniformidad : '))
       if 0 <= uniformidad <= 10:
-        Banda_Escolar.Registrar_Puntaje(uniformidad)
+        Banda_Escolar.Registrar_Puntaje(uniformidad) # Registrar_Puntaje
         break
     while True:
       Banda_Escolar.Limpiar()
       print('Criterios de evaluación (0 a 10) : ')
       coreografia = int(input('• Coreografía : '))
       if 0 <= coreografia <= 10:
-        Banda_Escolar.Registrar_Puntaje(coreografia)
+        Banda_Escolar.Registrar_Puntaje(coreografia) # Registrar_Puntaje
         break
     while True:
       Banda_Escolar.Limpiar()
       print('Criterios de evaluación (0 a 10) : ')
       alineacion = int(input('• Alineación : '))
       if 0 <= alineacion <= 10:
-        Banda_Escolar.Registrar_Puntaje(alineacion)
+        Banda_Escolar.Registrar_Puntaje(alineacion) # Registrar_Puntaje
         break
     while True:
       Banda_Escolar.Limpiar()
       print('Criterios de evaluación (0 a 10) : ')
       puntualidad = int(input('• Puntualidad : '))
       if 0 <= puntualidad <= 10:
-        Banda_Escolar.Registrar_Puntaje(puntualidad)
+        Banda_Escolar.Registrar_Puntaje(puntualidad) # Registrar_Puntaje
         break
+    
+    
+    bandera = False
+    with open('evaluaciones.txt', 'r') as file:
+      for line in file:
+        campos = line.strip().split(',')
+        if campos[0] == nombre_banda:
+          Banda_Escolar.Registrar_Puntaje(int(campos[1]))
+          bandera = True
+          break
+
+    if bandera:
+      criterios = 0
+      with open('evaluaciones.txt', 'a') as file:
+        self.Registrar_Puntaje(criterios)
 
 
   # Listar bandas inscritas.

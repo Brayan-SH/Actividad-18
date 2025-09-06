@@ -1,0 +1,3 @@
+Estrella Infantil,Colegio Luz,Primaria,8,9,7,8,10
+Liceo Xela,Instituto Xela,Básico,9,8,8,9,9
+Águilas del Occidente,Colegio Occidente,Diversificado,10,9,9,9,8
